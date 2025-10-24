@@ -4,8 +4,6 @@ import matplotlib.pyplot as plt
 from datetime import datetime
 
 
-st.image("image/Déploiment.png", caption="Aperçu du déploiement Streamlit", use_column_width=True)
-
 
 # --- Chargement des données (décommentez si nécessaire) ---
 # Assurez-vous que les fichiers CSV sont dans le dossier 'data/' si utilisés
