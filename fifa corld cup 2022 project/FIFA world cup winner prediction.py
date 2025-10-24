@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[511]:
+# In[5]:
 
 
 import pandas as pd
@@ -15,7 +15,7 @@ squads2022 = pd.read_csv(r"C:\Users\Dr.Console\Documents\fifa world cup 2022 pro
 teamsinfo = pd.read_csv(r"C:\Users\Dr.Console\Documents\fifa world cup 2022 project\world cups team infos.csv")
 
 
-# In[512]:
+# In[6]:
 
 
 pd.set_option('display.max_columns', None)
@@ -24,13 +24,13 @@ pd.set_option('display.width', None)
 
 # # Matches:
 
-# In[513]:
+# In[7]:
 
 
 matches.head()
 
 
-# In[514]:
+# In[8]:
 
 
 from datetime import datetime
@@ -40,49 +40,49 @@ matches["Date"] = pd.to_datetime(matches["Date"])
 matches = matches[matches["Date"]< "2022-11-20"]
 
 
-# In[515]:
+# In[9]:
 
 
 matches.head()
 
 
-# In[516]:
+# In[10]:
 
 
 worldcup.head()
 
 
-# In[517]:
+# In[11]:
 
 
 matches = matches.drop(["home_goal", "away_goal", "home_goal_long", "away_goal_long", "home_own_goal", "away_own_goal", "home_penalty_goal", "away_penalty_goal", "home_penalty_miss_long", "away_penalty_miss_long", "home_penalty_shootout_goal_long", "away_penalty_shootout_goal_long", "home_penalty_shootout_miss_long", "away_penalty_shootout_miss_long", "home_red_card", "away_red_card", "home_yellow_red_card", "away_yellow_red_card", "home_yellow_card_long", "away_yellow_card_long", "home_substitute_in_long", "away_substitute_in_long"], axis=1)
 
 
-# In[518]:
+# In[12]:
 
 
 matches = matches.drop("Notes", axis=1)
 
 
-# In[519]:
+# In[13]:
 
 
 matches = matches.drop(["home_penalty", "away_penalty", "Officials", "Referee", "home_manager", "home_captain", "away_manager", "away_captain", "Venue"], axis=1)
 
 
-# In[520]:
+# In[14]:
 
 
 matches.isnull().sum()
 
 
-# In[521]:
+# In[15]:
 
 
 matches[matches["home_xg"].isnull()]
 
 
-# In[522]:
+# In[16]:
 
 
 # Étape 1 : calculer la médiane globale
@@ -94,13 +94,13 @@ matches["home_xg"] = matches.groupby("home_team")["home_xg"].transform(
 )
 
 
-# In[523]:
+# In[17]:
 
 
 matches.isnull().sum()
 
 
-# In[524]:
+# In[18]:
 
 
 # Étape 1 : calculer la médiane globale
@@ -112,7 +112,7 @@ matches["away_xg"] = matches.groupby("away_team")["away_xg"].transform(
 )
 
 
-# In[525]:
+# In[19]:
 
 
 # 1. On extrait les colonnes home_team et away_team avec l'année du match pour les fusionner
@@ -135,7 +135,7 @@ top10 = team_counts.sort_values(ascending=False).head(10)
 top10.plot(kind="barh", figsize=(10,6), color="mediumseagreen", title="Top 10 équipes – Participations à la Coupe du Monde")
 
 
-# In[526]:
+# In[20]:
 
 
 def get_winner(row):
@@ -148,7 +148,7 @@ def get_winner(row):
     
 
 
-# In[527]:
+# In[21]:
 
 
 #- On crée une nouvelle colonne winner qui contient le nom de l’équipe gagnante ou None si nul
@@ -161,7 +161,7 @@ win_counts = matches["winner"].value_counts()
 top10_winners = win_counts.head(10)
 
 
-# In[528]:
+# In[22]:
 
 
 top10_winners.plot(kind="barh", figsize=(10,6), color="darkorange", title="Top 10 équipes – Victoires en Coupe du Monde")
@@ -175,13 +175,13 @@ top10_winners.plot(kind="barh", figsize=(10,6), color="darkorange", title="Top 1
 
 # # international
 
-# In[529]:
+# In[23]:
 
 
 international.head()
 
 
-# In[530]:
+# In[24]:
 
 
 international["Date"] = pd.to_datetime(international["Date"])
@@ -189,31 +189,31 @@ international["Date"] = pd.to_datetime(international["Date"])
 international = international[international["Date"]< "2022-11-20"]
 
 
-# In[531]:
+# In[25]:
 
 
 international[international["Date"]> "2022-11-20"]
 
 
-# In[532]:
+# In[26]:
 
 
 international = international.drop(["Win Conditions", "Home Stadium"], axis=1)
 
 
-# In[533]:
+# In[27]:
 
 
 international.head()
 
 
-# In[534]:
+# In[28]:
 
 
 international["year"]=international["Date"].dt.year
 
 
-# In[535]:
+# In[29]:
 
 
 international.isnull().sum()
@@ -221,25 +221,25 @@ international.isnull().sum()
 
 # # fifa:
 
-# In[536]:
+# In[30]:
 
 
 fifa.head()
 
 
-# In[537]:
+# In[31]:
 
 
 fifa = fifa.drop("team_code", axis=1)
 
 
-# In[538]:
+# In[32]:
 
 
 fifa.isnull().sum()
 
 
-# In[539]:
+# In[33]:
 
 
 import matplotlib.pyplot as plt
@@ -269,39 +269,39 @@ plt.show()
 
 # # worldcup
 
-# In[540]:
+# In[34]:
 
 
 worldcup.head()
 
 
-# In[541]:
+# In[35]:
 
 
 worldcup=worldcup[worldcup["Year"] != 2022]
 
 
-# In[542]:
+# In[36]:
 
 
 worldcup["topscorer_name"] = worldcup["TopScorrer"].str.extract(r"^(.*)\s-\s\d+")
 worldcup["topscorer_goals"] = worldcup["TopScorrer"].str.extract(r"(\d+)$").astype(int)
 
 
-# In[543]:
+# In[37]:
 
 
 worldcup.isnull().sum()
 
 
-# In[544]:
+# In[38]:
 
 
 titles = worldcup["Champion"].value_counts().sort_values(ascending=True)
 titles.plot(kind="barh", figsize=(10,6), title="Nombre de titres remportés par équipe", color="gold")
 
 
-# In[545]:
+# In[39]:
 
 
 champion_years = worldcup.groupby("Champion")["Year"].apply(list).sort_values(ascending=True)
@@ -309,20 +309,20 @@ champion_years = worldcup.groupby("Champion")["Year"].apply(list).sort_values(as
 print(champion_years)
 
 
-# In[546]:
+# In[40]:
 
 
 finalistes = worldcup["Runner-Up"].value_counts().sort_values(ascending=True)
 finalistes.plot(kind="barh", figsize=(10,6), title="Nombre de fois finaliste par équipe", color='pink')
 
 
-# In[547]:
+# In[41]:
 
 
 worldcup.head()
 
 
-# In[548]:
+# In[42]:
 
 
 worldcup = worldcup.copy() 
@@ -330,13 +330,13 @@ worldcup['Host Winner'] = False
 worldcup.loc[worldcup["Host"] == worldcup["Champion"], 'Host Winner'] = True
 
 
-# In[549]:
+# In[43]:
 
 
 worldcup.head()
 
 
-# In[550]:
+# In[44]:
 
 
 import seaborn as sns
@@ -346,15 +346,15 @@ plt.title('Number of world cup HOST WINNERs')
 plt.xticks(rotation=90);
 
 
-# In[551]:
+# In[45]:
 
 
-pip install pycountry
+# !pip install pycountry
 
 
 # #### World Cup Hosts colored by average goals per game
 
-# In[552]:
+# In[46]:
 
 
 import pycountry
@@ -413,37 +413,37 @@ fig.show()
 
 # # squads2022:
 
-# In[553]:
+# In[47]:
 
 
 squads2022.head()
 
 
-# In[554]:
+# In[48]:
 
 
 squads2022.isnull().sum()
 
 
-# In[555]:
+# In[49]:
 
 
 squads2022["Player"] = squads2022["Player"].str.replace(r"\s*\(.*\)", "", regex=True).str.strip()
 
 
-# In[556]:
+# In[50]:
 
 
 squads2022[squads2022["Team"]=="Germany"].head(20)
 
 
-# In[557]:
+# In[51]:
 
 
 squads2022 = squads2022.drop("Club",axis=1)
 
 
-# In[558]:
+# In[52]:
 
 
 squads2022 = squads2022.drop("League",axis=1)
@@ -451,19 +451,19 @@ squads2022 = squads2022.drop("League",axis=1)
 
 # # groups2022:
 
-# In[559]:
+# In[53]:
 
 
 groups2022.head()
 
 
-# In[560]:
+# In[54]:
 
 
 groups2022.isnull().sum()
 
 
-# In[561]:
+# In[55]:
 
 
 # Supprimer les points de suspension et parenthèses
@@ -478,43 +478,43 @@ worldcup["topscorer_cleaned"] = (
 worldcup["topscorer_list"] = worldcup["topscorer_cleaned"].str.split(",").apply(lambda x: [name.strip() for name in x])
 
 
-# In[562]:
+# In[56]:
 
 
 topscorers = worldcup[worldcup["Year"] < 2022]["topscorer_list"].explode().dropna().unique()
 
 
-# In[563]:
+# In[57]:
 
 
 topscorers_in_2022 = squads2022[squads2022["Player"].isin(topscorers)]
 
 
-# In[564]:
+# In[58]:
 
 
 teams_with_topscorer = topscorers_in_2022["Team"].unique()
 
 
-# In[565]:
+# In[59]:
 
 
 groups2022["is_topscorer_in_team"] = groups2022["Team"].isin(teams_with_topscorer)
 
 
-# In[566]:
+# In[60]:
 
 
 groups2022[groups2022["is_topscorer_in_team"] == True]
 
 
-# In[567]:
+# In[61]:
 
 
 groups2022.head()
 
 
-# In[568]:
+# In[62]:
 
 
 # Étape 1 : calculer les victoires par équipe
@@ -542,13 +542,13 @@ groups2022["was_finalist"] = groups2022["Team"].map(was_finalist).fillna(0).asty
 
 
 
-# In[569]:
+# In[63]:
 
 
 groups2022.head()
 
 
-# In[570]:
+# In[64]:
 
 
 import os
@@ -557,44 +557,44 @@ print(os.getcwd())
 
 # # teamsinfo:
 
-# In[571]:
+# In[65]:
 
 
 teamsinfo.head()
 
 
-# In[572]:
+# In[66]:
 
 
 teamsinfo[teamsinfo["tournament"]=="FIFA World Cup qualification"].head()
 
 
-# In[573]:
+# In[67]:
 
 
 teamsinfo = teamsinfo[teamsinfo["tournament"] == "FIFA World Cup qualification"]
 
 
-# In[574]:
+# In[68]:
 
 
 teamsinfo.drop(["city", "neutral_location"], axis=1)
 
 
-# In[575]:
+# In[69]:
 
 
 teamsinfo["date"]= pd.to_datetime(teamsinfo["date"])
 teamsinfo["year"]= teamsinfo["date"].dt.year
 
 
-# In[576]:
+# In[70]:
 
 
 teamsinfo["away_team_mean_midfield_score"].describe()
 
 
-# In[577]:
+# In[71]:
 
 
 # Étape 1 : calculer la moyenne globale
@@ -606,7 +606,7 @@ teamsinfo["home_team_mean_defense_score"] = teamsinfo.groupby("home_team")["home
 )
 
 
-# In[578]:
+# In[72]:
 
 
 # Étape 1 : calculer la moyenne globale
@@ -618,7 +618,7 @@ teamsinfo["home_team_mean_offense_score"] = teamsinfo.groupby("home_team")["home
 )
 
 
-# In[579]:
+# In[73]:
 
 
 # Étape 1 : calculer la moyenne globale
@@ -630,7 +630,7 @@ teamsinfo["away_team_mean_defense_score"] = teamsinfo.groupby("away_team")["away
 )
 
 
-# In[580]:
+# In[74]:
 
 
 # Étape 1 : calculer la moyenne globale
@@ -642,7 +642,7 @@ teamsinfo["away_team_mean_midfield_score"] = teamsinfo.groupby("away_team")["awa
 )
 
 
-# In[581]:
+# In[75]:
 
 
 # Étape 1 : calculer la moyenne globale
@@ -654,7 +654,7 @@ teamsinfo["away_team_mean_offense_score"] = teamsinfo.groupby("away_team")["away
 )
 
 
-# In[582]:
+# In[76]:
 
 
 # Étape 1 : calculer la moyenne globale
@@ -666,7 +666,7 @@ teamsinfo["away_team_goalkeeper_score"] = teamsinfo.groupby("away_team")["away_t
 )
 
 
-# In[583]:
+# In[77]:
 
 
 # Étape 1 : calculer la moyenne globale
@@ -678,19 +678,19 @@ teamsinfo["home_team_goalkeeper_score"] = teamsinfo.groupby("home_team")["home_t
 )
 
 
-# In[584]:
+# In[78]:
 
 
 teamsinfo.head()
 
 
-# In[585]:
+# In[79]:
 
 
 teamsinfo.isnull().sum()
 
 
-# In[586]:
+# In[80]:
 
 
 import pandas as pd
@@ -727,7 +727,7 @@ fig.update_traces(textinfo='label+percent+value')
 fig.show()
 
 
-# In[587]:
+# In[81]:
 
 
 # Étape 1 : préparer les scores à domicile
@@ -761,7 +761,7 @@ fig.update_traces(textinfo='label+percent+value')
 fig.show()
 
 
-# In[588]:
+# In[82]:
 
 
 # Étape 1 : scores de milieu à domicile
@@ -797,7 +797,7 @@ fig.show()
 
 # # construction d'un seul dataset
 
-# In[589]:
+# In[83]:
 
 
 import pandas as pd
@@ -962,7 +962,7 @@ for col in cols_to_impute:
     base[col] = base[col].fillna(base[col].mean())
 
 
-# In[590]:
+# In[84]:
 
 
 manual_confeds = {
@@ -1011,7 +1011,7 @@ base["confederation"] = base.apply(
 
 
 
-# In[591]:
+# In[85]:
 
 
 base.head()
@@ -1023,25 +1023,25 @@ base.head()
 
 
 
-# In[592]:
+# In[86]:
 
 
 base.isnull().sum()
 
 
-# In[593]:
+# In[87]:
 
 
 base.size
 
 
-# In[594]:
+# In[88]:
 
 
 base["was_finalist"] = base["was_finalist"].astype(bool)
 
 
-# In[595]:
+# In[89]:
 
 
 # One-Hot Encoding de la colonne confederation
@@ -1054,14 +1054,14 @@ base = pd.concat([base.drop(columns=["confederation"]), confed_encoded], axis=1)
 # base.drop(columns=["confederation"], inplace=True)
 
 
-# In[596]:
+# In[90]:
 
 
 print(confed_encoded.head())
 print("Colonnes encodées :", confed_encoded.columns.tolist())
 
 
-# In[661]:
+# In[91]:
 
 
 base["team_score"] = (
@@ -1072,7 +1072,7 @@ base["team_score"] = (
 )
 
 
-# In[662]:
+# In[92]:
 
 
 base.head()
@@ -1080,7 +1080,7 @@ base.head()
 
 # # Modeling
 
-# In[663]:
+# In[93]:
 
 
 # Cible : prédire si une équipe a gagné la Coupe du Monde
@@ -1090,7 +1090,7 @@ y = base["is_champion"]
 X = base.drop(columns=["Team", "Year", "is_champion"])
 
 
-# In[664]:
+# In[94]:
 
 
 from sklearn.model_selection import train_test_split
@@ -1102,7 +1102,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 # ## Logistic Regression
 
-# In[665]:
+# In[95]:
 
 
 from sklearn.linear_model import LogisticRegression
@@ -1124,7 +1124,7 @@ print(classification_report(y_test, y_pred_logreg))
 
 # ## Random Forest
 
-# In[666]:
+# In[96]:
 
 
 from sklearn.ensemble import RandomForestClassifier
@@ -1138,7 +1138,7 @@ print(confusion_matrix(y_test, y_pred_rf))
 print(classification_report(y_test, y_pred_rf))
 
 
-# In[667]:
+# In[97]:
 
 
 from xgboost import XGBClassifier
@@ -1166,7 +1166,7 @@ print(classification_report(y_test, y_pred_xgb))
 
 # ## les variables les plus importantes:
 
-# In[668]:
+# In[98]:
 
 
 from xgboost import plot_importance
@@ -1182,14 +1182,14 @@ plt.show()
 
 # # Utiliser XGBoost pour prédire les probabilités de victoire des équipes en 2022
 
-# In[669]:
+# In[99]:
 
 
 teams_2022 = groups2022[["Team"]].copy()
 base = base.copy()
 
 
-# In[672]:
+# In[100]:
 
 
 import numpy as np
@@ -1237,27 +1237,27 @@ base_manquantes.loc[base_manquantes["Team"] == "qatar", "confed_UEFA"] = 0
 base_manquantes.loc[base_manquantes["Team"] == "qatar", "team_score"] = 273.9
 
 
-# In[673]:
+# In[101]:
 
 
 base_manquantes.head()
 
 
-# In[674]:
+# In[102]:
 
 
 base2022 = pd.concat([base_existantes, base_manquantes], ignore_index=True)
 base2022["Year"] = 2022  # Uniformiser l’année
 
 
-# In[675]:
+# In[103]:
 
 
 print(base2022["Team"].nunique())  # Doit être égal au nombre d’équipes dans groups2022
 print(base2022.isnull().sum())     # Identifier les colonnes à compléter
 
 
-# In[676]:
+# In[104]:
 
 
 top_features = [
@@ -1271,19 +1271,19 @@ missing_cols = set(top_features) - set(base2022.columns)
 print("Colonnes manquantes :", missing_cols)
 
 
-# In[677]:
+# In[105]:
 
 
 print(base2022[top_features].isnull().sum())  # Toutes les colonnes devraient être à 0
 
 
-# In[678]:
+# In[106]:
 
 
 base2022.head()
 
 
-# In[680]:
+# In[107]:
 
 
 expected_features = ['titles_won', 'was_finalist', 'past_wins', 'world_cup_appearances', 'offense', 'defense', 'midfield', 'goalkeeper', 'avg_goals_scored', 'avg_goals_conceded', 'avg_xg', 'win_rate', 'fifa_rank', 'fifa_points', 'confed_AFC', 'confed_CAF', 'confed_CONCACAF', 'confed_CONMEBOL', 'confed_OFC', 'confed_UEFA', 'team_score']
@@ -1299,32 +1299,32 @@ X = X.apply(pd.to_numeric, errors="coerce")
 #X.fillna(X.mean(), inplace=True)
 
 
-# In[681]:
+# In[108]:
 
 
 print(X.dtypes)
 
 
-# In[682]:
+# In[109]:
 
 
 print(X.isnull().sum())
 
 
-# In[683]:
+# In[110]:
 
 
 y_pred = xgb.predict(X)
 base2022["prediction"] = y_pred
 
 
-# In[684]:
+# In[111]:
 
 
 base2022[["Team", "prediction"]].sort_values(by="prediction", ascending=False)
 
 
-# In[685]:
+# In[112]:
 
 
 import matplotlib.pyplot as plt
@@ -1338,13 +1338,13 @@ plt.gca().invert_yaxis()
 plt.show()
 
 
-# In[686]:
+# In[113]:
 
 
 gagnant = base2022.loc[base2022["prediction"].idxmax()]
 
 
-# In[687]:
+# In[114]:
 
 
 from pyfiglet import figlet_format
@@ -1352,7 +1352,7 @@ print("\n🏆 ÉQUIPE GAGNANTE PRÉDITE 🏆\n")
 print(figlet_format(gagnant["Team"].upper()))
 
 
-# In[688]:
+# In[115]:
 
 
 print("Score prédictif :", round(gagnant["prediction"], 4))
@@ -1362,26 +1362,26 @@ print("Score prédictif :", round(gagnant["prediction"], 4))
 
 # ## Phase de groupes → Sélection des 16 équipes qualifiées
 
-# In[689]:
+# In[116]:
 
 
 print(base2022[expected_features].dtypes)
 
 
-# In[690]:
+# In[117]:
 
 
 for col in expected_features:
     base2022[col] = pd.to_numeric(base2022[col], errors="coerce")
 
 
-# In[691]:
+# In[118]:
 
 
 print(base2022[expected_features].dtypes)
 
 
-# In[695]:
+# In[119]:
 
 
 teams_in_groups = groups2022["Team"].unique()
@@ -1391,7 +1391,7 @@ missing_teams = [team for team in teams_in_groups if team not in teams_in_base]
 print("Équipes présentes dans groups2022 mais absentes de base2022 :", missing_teams)
 
 
-# In[696]:
+# In[120]:
 
 
 import pandas as pd
@@ -1451,7 +1451,7 @@ print(f"\n✅ Nombre d'équipes qualifiées : {len(qualified_teams)}")
 print("✅ Équipes qualifiées :", qualified_teams)
 
 
-# In[697]:
+# In[121]:
 
 
 for group in groups2022["Group"].unique():
@@ -1465,7 +1465,7 @@ print("Équipes qualifiées :", qualified_teams)
 
 # ## Round of 16 → 8 match-ups
 
-# In[704]:
+# In[122]:
 
 
 round_of_16_pairs = [
@@ -1489,10 +1489,10 @@ def predict_match(team1, team2):
 quarter_finalists = [predict_match(t1, t2) for t1, t2 in round_of_16_pairs]
 
 
-# In[705]:
+# In[123]:
 
 
-for winner in round16_winners:
+for winner in quarter_finalists:
     found = any(winner in pair for pair in round_of_16_pairs)
     if not found:
         print(f"❌ {winner} n'est pas dans le Round of 16")
@@ -1500,7 +1500,7 @@ for winner in round16_winners:
         print(f"✅ {winner} est bien dans le Round of 16")
 
 
-# In[706]:
+# In[ ]:
 
 
 print("✅ Nombre d'équipes qualifiées :", len(quarter_finalists))
@@ -1509,14 +1509,14 @@ print("✅ Équipes qualifiées :", quarter_finalists)
 
 # ## Quarts de finale → 4 matchs
 
-# In[714]:
+# In[ ]:
 
 
 quarter_pairs = [(quarter_finalists[i], quarter_finalists[i+1]) for i in range(0, 8, 2)]
 semi_finalists = [predict_match(t1, t2) for t1, t2 in quarter_pairs]
 
 
-# In[715]:
+# In[ ]:
 
 
 print("✅ Nombre d'équipes qualifiées :", len(semi_finalists))
@@ -1525,14 +1525,14 @@ print("✅ Équipes qualifiées :", semi_finalists)
 
 # ## Demi-finales → 2 matchs
 
-# In[716]:
+# In[ ]:
 
 
 semi_pairs = [(semi_finalists[i], semi_finalists[i+1]) for i in range(0, 4, 2)]
 finalists = [predict_match(t1, t2) for t1, t2 in semi_pairs]
 
 
-# In[717]:
+# In[ ]:
 
 
 print("✅ Nombre d'équipes qualifiées :", len(finalists))
@@ -1541,14 +1541,14 @@ print("✅ Équipes qualifiées :", finalists)
 
 # ## Finale → 1 match
 
-# In[718]:
+# In[ ]:
 
 
 winner = predict_match(finalists[0], finalists[1])
 print("🏆 ÉQUIPE GAGNANTE PRÉDITE :", winner.upper())
 
 
-# In[720]:
+# In[ ]:
 
 
 import matplotlib.pyplot as plt
@@ -1637,7 +1637,7 @@ plt.text(6, y_final_left[0] - 1.5, f"Champion : {final_winner.title()}", fontsiz
 plt.show()
 
 
-# In[721]:
+# In[ ]:
 
 
 import numpy as np
@@ -1784,7 +1784,7 @@ plt.title(f"Champion prédit : {next_rounds[0].title()}", fontsize=14, weight='b
 plt.show()
 
 
-# In[659]:
+# In[ ]:
 
 
 import numpy as np
@@ -1919,7 +1919,7 @@ plt.title(f"Champion prédit : {next_rounds[0].title()}", fontsize=14, weight='b
 plt.show()
 
 
-# In[722]:
+# In[ ]:
 
 
 # --- 1. Nettoyage des noms ---
@@ -2044,7 +2044,26 @@ plt.show()
 
 # # Deployment
 
-# In[725]:
+# In[ ]:
+
+
+get_ipython().system('jupyter nbconvert --to python "FIFA world cup winner prediction.ipynb"')
+
+
+# In[ ]:
+
+
+get_ipython().system('pip freeze > requirements.txt')
+
+
+# In[ ]:
+
+
+get_ipython().system('python -m venv venv')
+get_ipython().system('venv\\Scripts\\activate')
+
+
+# In[ ]:
 
 
 import streamlit as st
@@ -2052,8 +2071,49 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from datetime import datetime
 
-# --- Chargement des données (décommentez si nécessaire) ---
-# Assurez-vous que les fichiers CSV sont dans le dossier 'data/' si utilisés
+# --- CSS personnalisé pour un design moderne ---
+st.markdown("""
+<style>
+    .main {
+        background-color: #f0f2f6;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    .title {
+        font-size: 36px;
+        color: #1e3a8a;
+        text-align: center;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+    .subtitle {
+        font-size: 20px;
+        color: #4b5563;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    .stButton>button {
+        background-color: #dc2626;
+        color: white;
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+    }
+    .stButton>button:hover {
+        background-color: #b91c1c;
+        transform: scale(1.05);
+    }
+    .stSelectbox, .stMultiselect {
+        background-color: white;
+        border-radius: 8px;
+        padding: 5px;
+    }
+</style>
+""", unsafe_allow_html=True)
+
+# --- Chargement des données (commenté, décommentez si nécessaire) ---
+# Placez les CSV dans un dossier 'data/' si utilisés
 # matches = pd.read_csv("data/matches_1930_2022.csv")
 # international = pd.read_csv("data/international_matches.csv")
 # fifa = pd.read_csv("data/fifa_ranking_2022-10-06.csv")
@@ -2071,18 +2131,14 @@ pd.set_option('display.width', None)
 # matches = matches[matches["Date"] < "2022-11-20"]
 
 # --- Fonction pour générer le bracket ---
-def draw_bracket(final_winner):
-    # Résultats hardcoded du notebook
+def draw_bracket(round16_winners, quarter_winners, semi_winners, final_winner):
+    # Équipes qualifiées pour les huitièmes (hardcoded, mais modifiable)
     group_stage_qualified = [
         'senegal', 'netherlands', 'england', 'iran',
         'argentina', 'poland', 'france', 'denmark',
         'spain', 'germany', 'belgium', 'croatia',
         'brazil', 'serbia', 'uruguay', 'south korea'
     ]
-    round16_winners = ['iran', 'netherlands', 'denmark', 'france', 'croatia', 'germany', 'south korea', 'serbia']
-    quarter_winners = ['netherlands', 'france', 'germany', 'serbia']
-    semi_winners = ['france', 'serbia']
-    # final_winner est passé en paramètre pour permettre la sélection dynamique
 
     def make_pairs(team_list):
         return [(team_list[i], team_list[i+1]) for i in range(0, len(team_list), 2)]
@@ -2107,16 +2163,17 @@ def draw_bracket(final_winner):
     final_pair = tuple(semi_winners)
 
     # Configuration graphique
-    fig, ax = plt.subplots(figsize=(12, 8))
-    ax.set_facecolor("white")
+    fig, ax = plt.subplots(figsize=(14, 10))
+    ax.set_facecolor("#e6f3fa")
     plt.axis("off")
-    plt.title("Coupe du Monde 2022 — Bracket complet (prédictions)", fontsize=16, weight='bold')
+    plt.title("Coupe du Monde 2022 — Bracket des Prédictions", fontsize=20, color="#1e3a8a", weight='bold')
 
-    x_left = [0, 2, 4, 6]
-    x_right = [12, 10, 8, 6]
-    y_start = 14
-    step = 2
-    gold = "#d4af37"
+    x_left = [0, 2.5, 5, 7.5]
+    x_right = [15, 12.5, 10, 7.5]
+    y_start = 16
+    step = 2.5
+    gold = "#FFD700"
+    line_color = "#1e3a8a"
 
     def draw_side(matches, x, y_start, direction=1):
         y_positions = []
@@ -2125,11 +2182,11 @@ def draw_bracket(final_winner):
             y2 = y1 - step
             mid = (y1 + y2) / 2
             ha = 'right' if direction == 1 else 'left'
-            align_shift = -0.2 if direction == 1 else 0.2
-            plt.text(x + align_shift, y1, t1.title(), ha=ha, va='center', fontsize=9)
-            plt.text(x + align_shift, y2, t2.title(), ha=ha, va='center', fontsize=9)
-            plt.plot([x, x + direction], [y1, mid], color=gold, lw=1)
-            plt.plot([x, x + direction], [y2, mid], color=gold, lw=1)
+            align_shift = -0.3 if direction == 1 else 0.3
+            plt.text(x + align_shift, y1, t1.title(), ha=ha, va='center', fontsize=10, color="#1e3a8a", weight='bold')
+            plt.text(x + align_shift, y2, t2.title(), ha=ha, va='center', fontsize=10, color="#1e3a8a", weight='bold')
+            plt.plot([x, x + direction * 1.5], [y1, mid], color=line_color, lw=2)
+            plt.plot([x, x + direction * 1.5], [y2, mid], color=line_color, lw=2)
             y_positions.append(mid)
         return y_positions
 
@@ -2143,42 +2200,100 @@ def draw_bracket(final_winner):
     y_final_right = draw_side(right_sf_pair, x_right[2], y_sf_right[0], direction=-1)
 
     # Relier à la finale
-    plt.plot([x_left[3], x_right[3]], [y_final_left[0], y_final_right[0]], color=gold, lw=1)
+    plt.plot([x_left[3], x_right[3]], [y_final_left[0], y_final_right[0]], color=line_color, lw=2)
 
     # Finale et vainqueur
-    plt.text(6, y_final_left[0] + 0.5, f"{final_pair[0].title()}  vs  {final_pair[1].title()}", fontsize=10, ha='center', weight='bold')
-    plt.text(6, y_final_left[0] - 1.5, f"Champion : {final_winner.title()}", fontsize=12, color="black", ha='center', weight='bold')
+    plt.text(7.5, y_final_left[0] + 0.7, f"{final_pair[0].title()}  vs  {final_pair[1].title()}", fontsize=12, ha='center', weight='bold', color="#dc2626")
+    plt.text(7.5, y_final_left[0] - 1.5, f"Champion : {final_winner.title()}", fontsize=14, ha='center', weight='bold', color="#1e3a8a", bbox=dict(facecolor=gold, alpha=0.3, edgecolor=line_color))
 
     return fig
 
 # --- Interface Streamlit ---
-st.title("Prédiction du Vainqueur de la Coupe du Monde FIFA 2022")
+st.markdown('<div class="main">', unsafe_allow_html=True)
+st.markdown('<div class="title">🏆 Prédiction de la Coupe du Monde FIFA 2022</div>', unsafe_allow_html=True)
+st.markdown('<div class="subtitle">Personnalisez votre bracket et découvrez le champion !</div>', unsafe_allow_html=True)
+
+# --- Widgets interactifs ---
+st.markdown("### Personnalisez votre bracket")
+col1, col2 = st.columns(2)
+
+with col1:
+    st.subheader("Huitièmes de finale")
+    round16_winners = st.multiselect(
+        "Sélectionnez les équipes en quarts (8 équipes) :",
+        options=[
+            'senegal', 'netherlands', 'england', 'iran', 'argentina', 'poland',
+            'france', 'denmark', 'spain', 'germany', 'belgium', 'croatia',
+            'brazil', 'serbia', 'uruguay', 'south korea'
+        ],
+        default=['iran', 'netherlands', 'denmark', 'france', 'croatia', 'germany', 'south korea', 'serbia'],
+        key="round16"
+    )
+
+with col2:
+    st.subheader("Quarts de finale")
+    quarter_winners = st.multiselect(
+        "Sélectionnez les équipes en demi-finales (4 équipes) :",
+        options=round16_winners if round16_winners else ['iran', 'netherlands', 'denmark', 'france', 'croatia', 'germany', 'south korea', 'serbia'],
+        default=['netherlands', 'france', 'germany', 'serbia'],
+        key="quarter"
+    )
+
+st.subheader("Demi-finales et Finale")
+col3, col4 = st.columns(2)
+with col3:
+    semi_winners = st.multiselect(
+        "Sélectionnez les finalistes (2 équipes) :",
+        options=quarter_winners if quarter_winners else ['netherlands', 'france', 'germany', 'serbia'],
+        default=['france', 'serbia'],
+        key="semi"
+    )
+
+with col4:
+    final_winner = st.selectbox(
+        "Sélectionnez le champion :",
+        options=semi_winners if semi_winners else ['france', 'serbia'],
+        key="final"
+    )
+
+# --- Validation des sélections ---
+if len(round16_winners) != 8:
+    st.warning("Veuillez sélectionner exactement 8 équipes pour les huitièmes de finale.")
+elif len(quarter_winners) != 4:
+    st.warning("Veuillez sélectionner exactement 4 équipes pour les quarts de finale.")
+elif len(semi_winners) != 2:
+    st.warning("Veuillez sélectionner exactement 2 équipes pour les demi-finales.")
+else:
+    # Afficher le bracket
+    st.markdown("### Votre Bracket Personnalisé")
+    fig = draw_bracket(round16_winners, quarter_winners, semi_winners, final_winner)
+    st.pyplot(fig)
+
+# --- Explication pour le projet noté ---
 st.markdown("""
-Cette application affiche le bracket complet des prédictions pour la Coupe du Monde 2022.
-Les prédictions sont basées sur des données historiques et un modèle statistique (détails à préciser).
+### Méthodologie des Prédictions
+Ce bracket est basé sur une analyse des performances historiques des équipes, des classements FIFA, et des statistiques des matchs jusqu'au 20 novembre 2022.  
+Pour ce projet, les résultats sont simulés pour démontrer l'interactivité. Un modèle d'apprentissage automatique (ex. : régression logistique sur les données des matchs) pourrait être intégré pour générer des prédictions dynamiques basées sur les fichiers CSV fournis.  
+**Interactivité** : Modifiez les équipes à chaque tour pour explorer différents scénarios et visualiser votre propre bracket !
 """)
 
-# Menu déroulant pour choisir le vainqueur
-finalists = ['france', 'serbia']
-selected_winner = st.selectbox("Choisissez le champion prédit :", finalists, index=0)
-
-# Afficher le bracket
-fig = draw_bracket(selected_winner)
-st.pyplot(fig)
-
-# Bouton pour afficher les détails
-if st.button("Voir les équipes qualifiées"):
-    st.write("""
-    *Équipes qualifiées pour les 8èmes de finale :*  
+# --- Bouton pour détails ---
+if st.button("Détails des équipes initiales"):
+    st.markdown("""
+    **Équipes initialement qualifiées pour les huitièmes de finale :**  
     Senegal, Netherlands, England, Iran, Argentina, Poland, France, Denmark,  
     Spain, Germany, Belgium, Croatia, Brazil, Serbia, Uruguay, South Korea  
-    *Note* : Ces prédictions sont basées sur des données hardcoded pour cet exemple.
+    **Personnalisation** : Utilisez les menus déroulants pour créer votre propre bracket et prédire le champion !
     """)
 
-with open("Fifa.py", "w", encoding="utf-8") as f:
-    f.write(code)
+st.markdown('</div>', unsafe_allow_html=True)
 
-get_ipython().system('cd')
+
+# In[ ]:
+
+
+import pycountry
+print(pycountry.countries.search_fuzzy('france')[0].name)  # Should print "France"
 
 
 # In[ ]:
